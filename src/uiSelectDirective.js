@@ -44,13 +44,11 @@ uis.directive('uiSelect',
         $select.focusserTitle = $select.baseTitle + ' focus';
         $select.focusserId = 'focusser-' + $select.generatedId;
 
-        $select.closeOnSelect = function() {
-          if (angular.isDefined(attrs.closeOnSelect)) {
-            return $parse(attrs.closeOnSelect)();
-          } else {
-            return uiSelectConfig.closeOnSelect;
-          }
-        }();
+        angular.forEach(['closeDelay', 'closeOnSelect'], function(attr) {
+          $select[attr] = angular.isDefined(attrs[attr]) ?
+            $parse(attrs[attr])() :
+            uiSelectConfig[attr];
+        });
 
         scope.$watch('skipFocusser', function() {
             var skipFocusser = scope.$eval(attrs.skipFocusser);
@@ -378,7 +376,7 @@ uis.directive('uiSelect',
         };
 
         var opened = false;
-        
+
         scope.calculateDropdownPos = function() {
           if ($select.open) {
             dropdown = angular.element(element).querySelectorAll('.ui-select-dropdown');
