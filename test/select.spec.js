@@ -164,6 +164,7 @@ describe('ui-select tests', function() {
       if (attrs.ngClass !== undefined) { attrsHtml += ' ng-class="' + attrs.ngClass + '"'; }
       if (attrs.resetSearchInput !== undefined) { attrsHtml += ' reset-search-input="' + attrs.resetSearchInput + '"'; }
       if (attrs.closeOnSelect !== undefined) { attrsHtml += ' close-on-select="' + attrs.closeOnSelect + '"'; }
+      if (attrs.closeDelay !== undefined) { attrsHtml += ' close-delay="' + attrs.closeDelay + '"'; }
       if (attrs.spinnerEnabled !== undefined) { attrsHtml += ' spinner-enabled="' + attrs.spinnerEnabled + '"'; }
       if (attrs.spinnerClass !== undefined) { attrsHtml += ' spinner-class="' + attrs.spinnerClass + '"'; }
       if (attrs.refresh !== undefined) { choicesAttrsHtml += ' refresh="' + attrs.refresh + '"'; }
@@ -523,6 +524,25 @@ describe('ui-select tests', function() {
     clickItem(el, 'Samantha');
 
     expect(isDropdownOpened(el)).toEqual(false);
+  });
+
+  it('should delay the close if closeDelay!=0', function(done) {
+    var el = createUiSelect({closeDelay: 50});
+
+    expect(isDropdownOpened(el)).toEqual(false);
+
+    clickMatch(el);
+
+    expect(isDropdownOpened(el)).toEqual(true);
+
+    clickItem(el, 'Samantha');
+
+    expect(isDropdownOpened(el)).toEqual(true);
+
+    setTimeout(function () {
+      expect(isDropdownOpened(el)).toEqual(false);
+      done();
+    }, 100);
   });
 
 
@@ -1838,6 +1858,7 @@ describe('ui-select tests', function() {
             if (attrs.disabled !== undefined) { attrsHtml += ' ng-disabled="' + attrs.disabled + '"'; }
             if (attrs.required !== undefined) { attrsHtml += ' ng-required="' + attrs.required + '"'; }
             if (attrs.tabindex !== undefined) { attrsHtml += ' tabindex="' + attrs.tabindex + '"'; }
+            if (attrs.closeDelay !== undefined) { attrsHtml += ' close-on-select="' + attrs.closeDelay + '"'; }
             if (attrs.closeOnSelect !== undefined) { attrsHtml += ' close-on-select="' + attrs.closeOnSelect + '"'; }
             if (attrs.tagging !== undefined) { attrsHtml += ' tagging="' + attrs.tagging + '"'; }
             if (attrs.taggingTokens !== undefined) { attrsHtml += ' tagging-tokens="' + attrs.taggingTokens + '"'; }
