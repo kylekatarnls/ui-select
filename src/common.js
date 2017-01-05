@@ -98,6 +98,7 @@ var uis = angular.module('ui.select', [])
   sortable: false,
   placeholder: '', // Empty by default, like HTML tag <select>
   refreshDelay: 1000, // In milliseconds
+  closeDelay: 0,
   closeOnSelect: true,
   skipFocusser: false,
   dropdownPosition: 'auto',
